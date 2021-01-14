@@ -207,17 +207,17 @@ def check_running_remote():
         _running_remote = False
     return _running_remote
 
-#def get_browser_client_js(debug_bridge=False):
-    #try:
+def get_browser_client_js(debug_bridge=False):
+    try:
         # Prepend channel number of client Javascript so it can communicate with this process via Jupyter-bridge
-        #r = requests.get(
-            #'https://raw.githubusercontent.com/cytoscape/jupyter-bridge/master/client/javascript_bridge.js')
-        #r.raise_for_status()
-        #inject_code = f'var Channel = "{_CHANNEL}"; \n\n' \
-                      #f'var JupyterBridge = "{_JUPYTER_BRIDGE_URL}"; \n\n' \
-                      #f' {r.text}'
-        #if debug_bridge:
-            #inject_code = f'var showDebug = true; \n\n' + inject_code
-        #return inject_code
-    #except Exception as e:
-        #raise requests.exceptions.HTTPError(f'Error creating Jupyter-bridge browser client for channel {_CHANNEL}: {_error_content(e)}')
+        r = requests.get(
+            'https://raw.githubusercontent.com/cytoscape/jupyter-bridge/master/client/javascript_bridge.js')
+        r.raise_for_status()
+        inject_code = f'var Channel = "{_CHANNEL}"; \n\n' \
+                      f'var JupyterBridge = "{_JUPYTER_BRIDGE_URL}"; \n\n' \
+                      f' {r.text}'
+        if debug_bridge:
+            inject_code = f'var showDebug = true; \n\n' + inject_code
+        return inject_code
+    except Exception as e:
+        raise requests.exceptions.HTTPError(f'Error creating Jupyter-bridge browser client for channel {_CHANNEL}: {_error_content(e)}')
